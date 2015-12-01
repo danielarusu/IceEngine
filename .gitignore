@@ -187,3 +187,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+lib
+include
+/IceEngine/IceEngine.vcxproj
+/IceEngine/IceEngine.vcxproj.filters
+/IceEngine/IceEngine.vcxproj.user
