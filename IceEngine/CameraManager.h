@@ -10,9 +10,11 @@ class Camera
 public:
 
 	Vector3D c_vPosition;
-	Vector3D c_vEyeVector;
+	Vector3D c_vTarget;
+	Vector3D c_vDirection;
+	
 	Vector3D c_vUpVector;
-	Vector3D c_vRightVector;
+	Vector3D c_vRightVector;	
 	
 	Camera();
 	~Camera();
@@ -20,7 +22,7 @@ public:
 	void positionCamera(GLfloat pos_X, GLfloat pos_Y, GLfloat pos_Z,
 		GLfloat eye_X, GLfloat eye_Y, GLfloat eye_Z,
 		GLfloat upVec_x, GLfloat upVec_Y, GLfloat upVec_Z);
-	void moveCamera(GLfloat speed);
+	void moveCamera(GLfloat direction);
 private:
 
 };

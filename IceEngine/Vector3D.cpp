@@ -75,6 +75,15 @@ Vector3D Vector3D::operator + (const Vector3D& v)
 	return Vector3D(xCoord, yCoord, zCoord);
 }
 
+Vector3D Vector3D::operator - (const Vector3D& v)
+{
+	xCoord = xCoord - v.xCoord;
+	yCoord = yCoord - v.yCoord;
+	zCoord = zCoord - v.zCoord;
+
+	return Vector3D(xCoord, yCoord, zCoord);
+}
+
 Vector3D Vector3D::operator * (const Vector3D& v)
 {
 	xCoord = xCoord * v.xCoord;
@@ -109,6 +118,15 @@ Vector3D Vector3D::scalarMult(const GLfloat& a)
 	this->zCoord *= a;
 
 	return *this;
+}
+
+Vector3D Vector3D::crossProdComponents(Vector3D& v)
+{
+	this->xCoord = this->yCoord * v.zCoord - this->zCoord * v.yCoord;
+	this->yCoord = this->xCoord * v.zCoord - this->zCoord * v.xCoord;
+	this->zCoord = this->xCoord * v.yCoord - this->yCoord * v.xCoord;
+
+	return Vector3D(*this);
 }
 
 GLfloat Vector3D::dotProduct(const Vector3D& v)

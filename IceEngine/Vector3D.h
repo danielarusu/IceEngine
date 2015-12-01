@@ -23,11 +23,13 @@ public:
 
 	Vector3D operator=(const Vector3D& v);
 	Vector3D operator+(const Vector3D& v);
+	Vector3D operator-(const Vector3D& v);
 	Vector3D operator*(const Vector3D& v);
 	Vector3D& operator+=(const Vector3D& v);
 	Vector3D& operator*=(const Vector3D& v);
 
 	Vector3D scalarMult(const GLfloat& a);
+	Vector3D crossProdComponents(Vector3D& v);
 	GLfloat dotProduct(const Vector3D& v);
 	float theta(Vector3D& v);
 

@@ -5,30 +5,41 @@
 #include "Object3D.h"
 #include "RenderManager.h"
 #include "Vector3D.h"
+#include "CameraManager.h"
+
+Camera g_Camera;
+bool* keyStates = new bool[256];
+int mainWindow;
 
 void renderWindow(){
-
 	glClearColor(0, 0, 0, 0);
-
 }
-void DrawGrid() {
-	int size = 10;
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glColor4f(0.75f, 0.75f, 0.75f, 0.1f);
 
-	glBegin(GL_LINES);
-		for (int i = -size; i <= size; i++){
+void keyPressed(unsigned char key, int x, int y) {
+	if (key == 'w' || key == 'W') { // If the 'w' key has been pressed  
+		g_Camera.moveCamera(0.02);
+		glTranslatef(g_Camera.c_vPosition.getXcoord(), g_Camera.c_vPosition.getYcoord(), g_Camera.c_vPosition.getZcoord());
+		printf("camX = %f, camY = %f, camZ = %f\n", g_Camera.c_vPosition.getXcoord(), g_Camera.c_vPosition.getYcoord(), g_Camera.c_vPosition.getZcoord());
+	}
 
-			glVertex3f((float)i, 0, (float)-size);
-			glVertex3f((float)i, 0, (float)size);
+	if (key == 's' || key == 'S') { // If the 's' key has been pressed  
+		g_Camera.moveCamera(-0.02);
+		glTranslatef(g_Camera.c_vPosition.getXcoord(), g_Camera.c_vPosition.getYcoord(), g_Camera.c_vPosition.getZcoord());
+		printf("camX = %f, camY = %f, camZ = %f\n ", g_Camera.c_vPosition.getXcoord(), g_Camera.c_vPosition.getYcoord(), g_Camera.c_vPosition.getZcoord());
+	}
 
-			glVertex3f((float)-size, 0, (float)i);
-			glVertex3f((float)size, 0, (float)i);
-		}
-	glEnd();
-	glutSwapBuffers();
+	glutSetWindow(mainWindow);
+	glutPostRedisplay();
+}
+
+void keyUp(unsigned char key, int x, int y) {
+	if (key == 'w' || key == 'W') { // If the 'w' key has been pressed  
+		g_Camera.moveCamera(NULL);
+	}
+
+	if (key == 's' || key == 'S') { // If the 's' key has been pressed  
+		g_Camera.moveCamera(NULL);
+	}
 }
 
 void CreateGrid(){
@@ -36,7 +47,7 @@ void CreateGrid(){
 	int size_l = (2 * size + 1) * 2;
 	int size_v = size_l * 2;
 
-	LINE3D* l= (LINE3D*)malloc(sizeof(LINE3D)*size_l);
+	LINE3D* l = (LINE3D*)malloc(sizeof(LINE3D)*size_l);
 
 	int current_pos = -size;
 
@@ -123,7 +134,20 @@ void CreateGrid2() {
 }
 
 void Display() {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glColor4f(0.75f, 0.75f, 0.75f, 1.0f);
+
+	gluLookAt(
+		g_Camera.c_vPosition.getXcoord(), g_Camera.c_vPosition.getYcoord(), g_Camera.c_vPosition.getZcoord(),
+		g_Camera.c_vTarget.getXcoord(), g_Camera.c_vTarget.getYcoord(), g_Camera.c_vTarget.getZcoord(),
+		g_Camera.c_vUpVector.getXcoord(), g_Camera.c_vUpVector.getYcoord(), g_Camera.c_vUpVector.getZcoord()
+		);
+
 	RenderManager::getInstance()->DrawList();
+	CreateGrid();
+	glutSwapBuffers();
 }
 
 void Reshape(int w, int h){
@@ -132,14 +156,15 @@ void Reshape(int w, int h){
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45.0, (GLdouble)w/(GLdouble)h, 1.0, 200.0);
-	gluLookAt(0, 1, 4, 0, 0, -100, 0, 2, 0);
+	gluLookAt(
+		g_Camera.c_vPosition.getXcoord(), g_Camera.c_vPosition.getYcoord(), g_Camera.c_vPosition.getZcoord(), 
+		g_Camera.c_vTarget.getXcoord(), g_Camera.c_vTarget.getYcoord(), g_Camera.c_vTarget.getZcoord(),
+		g_Camera.c_vUpVector.getXcoord(), g_Camera.c_vUpVector.getYcoord(), g_Camera.c_vUpVector.getZcoord()
+		);
 }
 
 void main(int argc, char * argv[]){
 	glutInit(&argc, argv);
-	//Step 1: Initialize GLUT
-	VERTEX3D v[] = { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 1, 0 } };
-	LINE l[] = { { 0, 1 }, { 1, 2 }, { 0, 2 } };
 
 	Vector3D *v1 = new Vector3D(2, 3, 5);
 	Vector3D *v2 = new Vector3D(4, 2, 1);
@@ -148,6 +173,18 @@ void main(int argc, char * argv[]){
 	printf("Magnitude v1: %f\n", v1->magnitude());
 	printf("Magnitude v2: %f\n", v2->magnitude());
 	printf("Angle between: %f\n", v1->theta(*v2));
+	VERTEX3D v[] = { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 1, 0 } };
+	LINE l[] = { { 0, 1 }, { 1, 2 }, { 0, 2 } };
+
+	//Step 1: Initialize GLUT
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+	glutInitWindowSize(800, 600);
+
+	//Step 2: Create window
+	mainWindow = glutCreateWindow("3D Solar System");
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	renderWindow();
 
 	Object3D *cube = new Object3D(v, VECTOR_SIZE(v));
 	Object3D *line = new Object3D(v, l, VECTOR_SIZE(v), VECTOR_SIZE(l));
@@ -156,21 +193,14 @@ void main(int argc, char * argv[]){
 
 	rmg->RegisterObject(cube);
 	rmg->RegisterObject(line);
-	CreateGrid();
-
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowSize(800, 600);
-
-	//Step 2: Create window
-	glutCreateWindow("3D Solar System");
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-	renderWindow();
-
+	
 	//Step 3: Handlers Functions
-
-	//glutDisplayFunc(Display);
+	
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Reshape);
+	glutIdleFunc(Display);
+
+	glutKeyboardFunc(keyPressed); // Tell GLUT to use the method "keyPressed" for key presses 
+	//glutKeyboardFunc(keyUp);
 	glutMainLoop();
 }

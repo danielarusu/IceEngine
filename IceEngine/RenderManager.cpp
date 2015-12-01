@@ -32,17 +32,11 @@ void RenderManager::RegisterObject(Object3D* obj){
 	/**/
 }
 
-void RenderManager::DrawList(){
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glColor4f(0.75f, 0.75f, 0.75f, 1.0f);
+void RenderManager::DrawList()
+{
 	if (obj_nr != 0){
 		for (vector<Object3D* >::iterator it = objList.begin(); it != objList.end(); ++it){
 			(*it)->DrawObj();
 		}
 	}
-	glutSwapBuffers();
-
 }
