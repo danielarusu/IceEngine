@@ -192,3 +192,4 @@ include
 /IceEngine/IceEngine.vcxproj
 /IceEngine/IceEngine.vcxproj.filters
 /IceEngine/IceEngine.vcxproj.user
+/IceEngine/freeglut.dll
