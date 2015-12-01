@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="RenderManager">
+      <UniqueIdentifier>{66f87f19-417a-4f9e-b4df-40a39f8cee66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CameraManager">
+      <UniqueIdentifier>{001de9f8-8e96-4bea-aab6-0a193ed5530c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{5b31ebaa-39de-4431-aaba-54797edb7bff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Vector3D">
+      <UniqueIdentifier>{d8523cea-e031-41d7-95ac-44210c2e7d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneManager">
+      <UniqueIdentifier>{d5d29e64-3db9-4bba-a872-a5b7db293f2f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderManager.cpp">
+      <Filter>RenderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>CameraManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>Math\Vector3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RenderManager.h">
+      <Filter>RenderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>CameraManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Math\Vector3D</Filter>
+    </ClInclude>
+    <ClInclude Include="global.defines.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="global.includes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="global.utils.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj.struct.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
